@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Forecast</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.4/axios.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        #weather-info, #forecast, #chatbot {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+        #error-message {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Weather Forecast</h1>
+    
+    <div id="search">
+        <input type="text" id="location-input" placeholder="Enter location">
+        <button onclick="getWeather()">Get Weather</button>
+    </div>
+
+    <div id="error-message"></div>
+
+    <div id="weather-info">
+        <!-- Current weather information will be displayed here -->
+    </div>
+
+    <div id="forecast">
+        <!-- 5-day forecast will be displayed here -->
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:8000';  // Update this if your backend is hosted elsewhere
+        
+        async function getWeather() {
+            const location = document.getElementById('location-input').value;
+            const errorMessageDiv = document.getElementById('error-message');
+            const weatherInfo = document.getElementById('weather-info');
+            const forecastDiv = document.getElementById('forecast');
+
+            // Clear previous results and errors
+            errorMessageDiv.textContent = '';
+            weatherInfo.innerHTML = '';
+            forecastDiv.innerHTML = '';
+
+            if (!location) {
+                errorMessageDiv.textContent = 'Please enter a location.';
+                return;
+            }
+
+            try {
+                console.log(`Fetching weather data for ${location}`);
+                const response = await axios.get(`${API_URL}/weather/${location}`);
+                console.log('API Response:', response.data);
+                displayWeather(response.data);
+            } catch (error) {
+                console.error('Error fetching weather data:', error);
+                if (error.response && error.response.status === 404) {
+                    errorMessageDiv.textContent = 'Weather data not found for this location.';
+                } else {
+                    errorMessageDiv.textContent = 'Error: Unable to fetch weather data. Please try again.';
+                }
+            }
+        }
+
+        function displayWeather(data) {
+            const weatherInfo = document.getElementById('weather-info');
+            weatherInfo.innerHTML = `
+                <h2>Current Weather in ${data.city}</h2>
+                <p>Temperature: ${data.temperature}°C</p>
+                <p>Humidity: ${data.humidity}%</p>
+                <p>Wind Speed: ${data.wind_speed} m/s</p>
+                <p>Description: ${data.description}</p>
+                <p>Last Updated: ${new Date(data.timestamp).toLocaleString()}</p>
+            `;
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const message = input.value;
+            input.value = '';
+            displayMessage('You', message);
+            // Here you would typically send the message to your backend for processing
+            setTimeout(() => {
+                const response = "I'm sorry, I'm a simple chatbot. For weather information, please use the search bar above.";
+                displayMessage('Chatbot', response);
+            }, 1000);
+        }
+
+        function displayMessage(sender, message) {
+            const chatMessages = document.getElementById('chat-messages');
+            chatMessages.innerHTML += `<p><strong>${sender}:</strong> ${message}</p>`;
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Weather Data</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.4/axios.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <h1>All Weather Data</h1>
+    <div id="weather-data"></div>
+
+    <script>
+        const API_URL = 'http://localhost:8000';  // Update this if your backend is hosted elsewhere
+
+        async function getAllWeatherData() {
+            try {
+                const response = await axios.get(`${API_URL}/all-weather/`);
+                displayAllWeather(response.data);
+            } catch (error) {
+                console.error('Error fetching weather data:', error);
+                document.getElementById('weather-data').innerHTML = 'Error: Unable to fetch weather data. Please try again.';
+            }
+        }
+
+        function displayAllWeather(data) {
+            const weatherDataDiv = document.getElementById('weather-data');
+            let html = '<table><tr><th>City</th><th>Temperature</th><th>Humidity</th><th>Wind Speed</th><th>Description</th><th>Timestamp</th></tr>';
+            
+            data.forEach(weather => {
+                html += `
+                    <tr>
+                        <td>${weather.city}</td>
+                        <td>${weather.temperature}°C</td>
+                        <td>${weather.humidity}%</td>
+                        <td>${weather.wind_speed} m/s</td>
+                        <td>${weather.description}</td>
+                        <td>${new Date(weather.timestamp).toLocaleString()}</td>
+                    </tr>
+                `;
+            });
+
+            html += '</table>';
+            weatherDataDiv.innerHTML = html;
+        }
+
+        // Load the data when the page loads
+        document.addEventListener('DOMContentLoaded', getAllWeatherData);
+    </script>
+</body>
+</html>

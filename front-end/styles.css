@@ -1,0 +1,169 @@
+/* General styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #74ebd5, #ACB6E5);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Header */
+h1 {
+    font-size: 2.5rem;
+    color: #333;
+    text-align: center;
+    margin-bottom: 30px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Input box and button */
+#search {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+#location-input {
+    padding: 10px;
+    font-size: 1rem;
+    border: 2px solid #333;
+    border-radius: 5px;
+    outline: none;
+    width: 70%;
+    transition: all 0.3s ease;
+}
+
+#location-input:focus {
+    border-color: #74ebd5;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #74ebd5;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    color: #fff;
+}
+
+button:hover {
+    background-color: #57c1bc;
+}
+
+/* Weather Info */
+#weather-info, #forecast, #chatbot {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+#weather-info h2, #forecast h2 {
+    font-size: 1.8rem;
+    color: #333;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+#weather-info p, #forecast p {
+    font-size: 1.1rem;
+    color: #555;
+    margin: 5px 0;
+}
+
+/* Chatbot Styles */
+#chatbot {
+    background-color: #fff;
+}
+
+#chat-messages {
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    padding: 10px;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+}
+
+#chat-input {
+    width: 80%;
+    padding: 10px;
+    margin-right: 10px;
+    border: 2px solid #333;
+    border-radius: 5px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+#chat-input:focus {
+    border-color: #ACB6E5;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+}
+
+#chatbot button {
+    padding: 10px;
+    background-color: #ACB6E5;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#chatbot button:hover {
+    background-color: #74ebd5;
+}
+
+/* Chat Messages */
+#chat-messages p {
+    margin: 5px 0;
+    padding: 8px;
+    border-radius: 5px;
+    background-color: #e9ecef;
+    max-width: 70%;
+}
+
+#chat-messages p strong {
+    color: #333;
+}
+
+/* Chat message alignment */
+#chat-messages p:nth-child(odd) {
+    background-color: #74ebd5;
+    margin-left: auto;
+    text-align: right;
+    color: white;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+    #location-input {
+        width: 100%;
+    }
+
+    button {
+        width: 100%;
+    }
+
+    #chat-input {
+        width: 70%;
+    }
+}

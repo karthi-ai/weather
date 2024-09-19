@@ -9,6 +9,7 @@ from typing import List
 import requests
 from fastapi.middleware.cors import CORSMiddleware
 from config import OPENWEATHERMAP_API_KEY
+from fastapi.staticfiles import StaticFiles
 
 # Database setup
 SQLALCHEMY_DATABASE_URL = "sqlite:///./weather.db"
@@ -53,6 +54,11 @@ Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
+app.mount("/static", StaticFiles(directory="html"), name="static")
+
+@app.get("/")
+def read_root():
+    return {"message": "Welcome to your FastAPI app!"}
 
 app.add_middleware(
     CORSMiddleware,
